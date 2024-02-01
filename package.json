@@ -1,0 +1,23 @@
+{
+  "name": "harness-spec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "generate-schema": "ts-json-schema-generator --path 'schema/Schema.ts' --type 'Schema' --out dist/schema.json",
+    "bundle": "node scripts/bundle.js",
+    "generate": "node scripts/generate.js",
+    "document": "node scripts/document.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "case": "^1.6.3",
+    "deep-equal": "^2.0.5",
+    "handlebars": "^4.7.7",
+    "js-yaml": "^4.1.0",
+    "ts-json-schema-generator": "^1.5.0",
+    "typescript-json-schema": "^0.62.0"
+  }
+}

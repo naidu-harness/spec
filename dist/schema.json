@@ -1,0 +1,1646 @@
+{
+  "$ref": "#/definitions/Schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Action": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ActionType"
+        },
+        {
+          "$ref": "#/definitions/ActionLong"
+        }
+      ]
+    },
+    "ActionLong": {
+      "additionalProperties": false,
+      "properties": {
+        "abort": {
+          "type": "boolean"
+        },
+        "fail": {
+          "type": "boolean"
+        },
+        "ignore": {
+          "type": "boolean"
+        },
+        "manual-intervention": {
+          "$ref": "#/definitions/ActionManual"
+        },
+        "pipeline-rollback": {
+          "type": "boolean"
+        },
+        "retry": {
+          "$ref": "#/definitions/ActionRetry"
+        },
+        "retry-step-group": {
+          "type": "boolean"
+        },
+        "stage-rollback": {
+          "type": "boolean"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ActionManual": {
+      "additionalProperties": false,
+      "properties": {
+        "timeout": {
+          "type": "string"
+        },
+        "timeout-action": {
+          "$ref": "#/definitions/Action"
+        }
+      },
+      "type": "object"
+    },
+    "ActionRetry": {
+      "additionalProperties": false,
+      "properties": {
+        "attempts": {
+          "type": "number"
+        },
+        "failure-action": {
+          "$ref": "#/definitions/Action"
+        },
+        "interval": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ActionType": {
+      "enum": [
+        "abort",
+        "fail",
+        "ignore",
+        "manual-intervention",
+        "pipeline-rollback",
+        "retry",
+        "retry-step-group",
+        "stage-rollback",
+        "success"
+      ],
+      "type": "string"
+    },
+    "Cache": {
+      "additionalProperties": false,
+      "description": "Cache defines pipeline caching behavior.",
+      "properties": {
+        "disabled": {
+          "description": "Disabled disables cache intelligence.",
+          "type": "boolean"
+        },
+        "key": {
+          "description": "Key provides a caching key.",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "Paths provides one or more paths to cache."
+        },
+        "policy": {
+          "description": "Policy configures the pull and push behavior of the cache. By default, the stage pulls the cache when the stage starts and pushes changes to the cache when the stage ends.",
+          "enum": [
+            "pull",
+            "pull-push",
+            "push"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Container": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/ContainerLong"
+        }
+      ]
+    },
+    "ContainerLong": {
+      "additionalProperties": false,
+      "description": "ContainerLong defines the container configuration syntax in long form.",
+      "properties": {
+        "args": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "connector": {
+          "description": "Connector provides the Connect used to authenticate to the registry.",
+          "type": "string"
+        },
+        "cpu": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "credentials": {
+          "$ref": "#/definitions/Credentials",
+          "description": "Credentials provides registry authentication credentials."
+        },
+        "dns": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "entrypoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "extra-hosts": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "group": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "image": {
+          "description": "Image defines the container image.",
+          "type": "string"
+        },
+        "memory": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "network": {
+          "type": "string"
+        },
+        "network-mode": {
+          "type": "string"
+        },
+        "ports": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "privileged": {
+          "type": "boolean"
+        },
+        "pull": {
+          "enum": [
+            "always",
+            "never",
+            "if-not-exists"
+          ],
+          "type": "string"
+        },
+        "shm-size": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "user": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "volumes": {
+          "items": {
+            "$ref": "#/definitions/Mount"
+          },
+          "type": "array"
+        },
+        "workdir": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Credentials": {
+      "additionalProperties": false,
+      "properties": {
+        "aws": {
+          "$ref": "#/definitions/CredentialsAWS",
+          "description": "AWS defines registry credentials for amazon web services."
+        },
+        "password": {
+          "description": "Password defines registry password.",
+          "type": "string"
+        },
+        "username": {
+          "description": "Username defines registry username.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CredentialsAWS": {
+      "additionalProperties": false,
+      "properties": {
+        "access-key": {
+          "type": "string"
+        },
+        "secret-key": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Event": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/EventType"
+        },
+        {
+          "$ref": "#/definitions/EventLong"
+        }
+      ]
+    },
+    "EventFilter": {
+      "additionalProperties": false,
+      "properties": {
+        "types": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "EventLong": {
+      "additionalProperties": false,
+      "properties": {
+        "branch_protection_rule": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "check_run": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "check_suite": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "create": {},
+        "delete": {},
+        "deployment": {},
+        "deployment_status": {},
+        "discussion": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "discussion_comment": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "fork": {},
+        "issue_comment": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "issues": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "label": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "member": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "merge_group": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "milestone": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "page_build": {},
+        "project": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "project_card": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "project_column": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "public": {},
+        "pull_request": {
+          "$ref": "#/definitions/PullRequestFilter"
+        },
+        "pull_request_review": {
+          "$ref": "#/definitions/Event"
+        },
+        "pull_request_review_comment": {
+          "$ref": "#/definitions/Event"
+        },
+        "pull_request_target": {
+          "$ref": "#/definitions/PullRequestFilter"
+        },
+        "push": {
+          "$ref": "#/definitions/PushFilter"
+        },
+        "registry_package": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "release": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "repository_dispatch": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "schedule": {},
+        "status": {},
+        "watch": {
+          "$ref": "#/definitions/EventFilter"
+        },
+        "workflow_call": {},
+        "workflow_dispatch": {},
+        "workflow_run": {}
+      },
+      "type": "object"
+    },
+    "EventType": {
+      "enum": [
+        "branch_protection_rule",
+        "check_run",
+        "check_suite",
+        "create",
+        "delete",
+        "deployment",
+        "deployment_status",
+        "discussion",
+        "discussion_comment",
+        "fork",
+        "issue_comment",
+        "issues",
+        "label",
+        "member",
+        "merge_group",
+        "milestone",
+        "page_build",
+        "project",
+        "project_card",
+        "project_column",
+        "public",
+        "pull_request",
+        "pull_request_review",
+        "pull_request_review_comment",
+        "pull_request_target",
+        "push",
+        "registry_package",
+        "repository_dispatch",
+        "release",
+        "schedule",
+        "status",
+        "watch",
+        "workflow_call",
+        "workflow_dispatch",
+        "workflow_run"
+      ],
+      "type": "string"
+    },
+    "FailureStrategy": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/definitions/Action"
+        },
+        "errors": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FailureType"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/FailureType"
+              },
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "FailureType": {
+      "enum": [
+        "all",
+        "approval-rejection",
+        "authentication",
+        "authorization",
+        "connectivity",
+        "delegate-provisioning",
+        "delegate-restart",
+        "input-timeout",
+        "policy-evaluation",
+        "timeout",
+        "unknown",
+        "verification",
+        "user-mark-fail"
+      ],
+      "type": "string"
+    },
+    "For": {
+      "additionalProperties": false,
+      "description": "For defines a for loop execution strategy.",
+      "properties": {
+        "iterations": {
+          "description": "Iterations defines maximum number of interations.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Input": {
+      "additionalProperties": false,
+      "properties": {
+        "default": {},
+        "description": {
+          "description": "Description defines the input description.",
+          "type": "string"
+        },
+        "enum": {
+          "description": "Enum defines a list of accepted input values.",
+          "items": {},
+          "type": "array"
+        },
+        "items": {
+          "description": "Items defines an array type.",
+          "items": {},
+          "type": "array"
+        },
+        "mask": {
+          "description": "Mask indicates the input should be masked.",
+          "type": "boolean"
+        },
+        "required": {
+          "description": "Required indicates the input is required.",
+          "type": "boolean"
+        },
+        "type": {
+          "description": "Type defines the input type.",
+          "enum": [
+            "string",
+            "number",
+            "boolean",
+            "array",
+            "map"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "Matrix": {
+      "description": "Matrix defines a matrix execution strategy.",
+      "properties": {
+        "exclude": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "include": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Mount": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/MountLong"
+        }
+      ]
+    },
+    "MountLong": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target"
+      ],
+      "type": "object"
+    },
+    "On": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/EventType"
+        },
+        {
+          "items": {
+            "$ref": "#/definitions/Event"
+          },
+          "type": "array"
+        },
+        {
+          "$ref": "#/definitions/Event"
+        }
+      ]
+    },
+    "Output": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/OutputLong"
+        }
+      ]
+    },
+    "OutputLong": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "type": "string"
+        },
+        "mask": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "pipeline",
+            "stage"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Pipeline": {
+      "additionalProperties": false,
+      "properties": {
+        "barriers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        },
+        "if": {
+          "type": "string"
+        },
+        "inputs": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Input"
+          },
+          "type": "object"
+        },
+        "jobs": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Stage"
+          },
+          "deprecated": true,
+          "description": "Jobs defines jobs (stages) in the pipeline.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        },
+        "on": {
+          "$ref": "#/definitions/On"
+        },
+        "repository": {
+          "$ref": "#/definitions/Repository"
+        },
+        "stages": {
+          "items": {
+            "$ref": "#/definitions/Stage"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Platform": {
+      "additionalProperties": false,
+      "description": "Platform defines the target execution environment.",
+      "properties": {
+        "arch": {
+          "description": "OS defines the target operating system.",
+          "type": "string"
+        },
+        "features": {
+          "description": "Features defines the target platform features. Not currently used.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "os": {
+          "description": "Arch defines the target cpu architecture.",
+          "type": "string"
+        },
+        "variant": {
+          "description": "Variant defines the target cpu architecture variant. Not currently used.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Version defines the target operating system version. Not currently used.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PullRequestFilter": {
+      "additionalProperties": false,
+      "properties": {
+        "branches": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "branches-ignore": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "paths": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "paths-ignore": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "review-approved": {
+          "type": "boolean"
+        },
+        "review-dismissed": {
+          "type": "boolean"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "tags-ignore": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "types": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PushFilter": {
+      "additionalProperties": false,
+      "properties": {
+        "branches": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "branches-ignore": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "paths": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "paths-ignore": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "tags-ignore": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Report": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "junit",
+            "xunit",
+            "numit"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Repository": {
+      "additionalProperties": false,
+      "description": "Repository defines a remote git repository.",
+      "properties": {
+        "connector": {
+          "description": "Connector provides the repository connector.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name provides the repository name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Schema": {
+      "additionalProperties": false,
+      "properties": {
+        "defaults": {
+          "description": "Defaults provides default settings that apply to all jobs in the workflow.",
+          "type": "object"
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Envs defines environment variables that are available to all steps in the workflow.",
+          "type": "object"
+        },
+        "inputset": {
+          "description": "Inputset defines re-usable inputs."
+        },
+        "jobs": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Stage"
+          },
+          "description": "Jobs defines the parallel workflow jobs.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Name defines the pipeline name.",
+          "type": "string"
+        },
+        "on": {
+          "$ref": "#/definitions/On",
+          "description": "On defines the workflow triggers."
+        },
+        "pipeline": {
+          "$ref": "#/definitions/Pipeline",
+          "description": "Pipeline defines the pipeline configuration."
+        },
+        "template": {
+          "$ref": "#/definitions/Template",
+          "description": "Template defines re-usable resources."
+        }
+      },
+      "type": "object"
+    },
+    "Service": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/ServiceLong"
+        }
+      ]
+    },
+    "ServiceLong": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "parallel": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object"
+    },
+    "Stage": {
+      "additionalProperties": false,
+      "properties": {
+        "cache": {
+          "$ref": "#/definitions/Cache",
+          "description": "Cache defines the cache configuration."
+        },
+        "delegate": {
+          "description": "Delegage defines the delegate that should handle stage execution. This is optional.",
+          "type": "string"
+        },
+        "failure-strategy": {
+          "$ref": "#/definitions/FailureStrategy"
+        },
+        "group": {
+          "$ref": "#/definitions/StageGroup",
+          "description": "Group defines a group of steps."
+        },
+        "id": {
+          "description": "Id defines the pipeline id.",
+          "type": "string"
+        },
+        "if": {
+          "description": "If defines conditional execution logic.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name defines the pipeline name.",
+          "type": "string"
+        },
+        "parallel": {
+          "$ref": "#/definitions/StageGroup",
+          "description": "Parallel defines a parallel of stages."
+        },
+        "platform": {
+          "$ref": "#/definitions/Platform",
+          "description": "Platform defines the target platform."
+        },
+        "runs-on": {
+          "deprecated": true,
+          "description": "RunsOn defines the type of machine to run the job.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "string"
+        },
+        "service": {
+          "$ref": "#/definitions/Service",
+          "description": "Service defines the deployment target."
+        },
+        "steps": {
+          "description": "Steps defines a list of steps.",
+          "items": {
+            "$ref": "#/definitions/Step"
+          },
+          "type": "array"
+        },
+        "strategy": {
+          "$ref": "#/definitions/Strategy",
+          "description": "Strategy defines the matrix or looping strategy."
+        },
+        "template": {
+          "$ref": "#/definitions/StageTemplate",
+          "description": "Template defines a stage template."
+        },
+        "volumes": {
+          "items": {
+            "$ref": "#/definitions/Volume"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "StageGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "parallel": {
+          "deprecated": true,
+          "description": "Parallel defines the maximum number of stages that can run in parallel. If unset or zero, the stages run sequentially.",
+          "type": "number"
+        },
+        "stages": {
+          "description": "Stages defines a list of stages.",
+          "items": {
+            "$ref": "#/definitions/Stage"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "StageTemplate": {
+      "additionalProperties": false,
+      "properties": {
+        "uses": {
+          "type": "string"
+        },
+        "with": {
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Step": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/StepLong"
+        }
+      ]
+    },
+    "StepAction": {
+      "additionalProperties": false,
+      "properties": {
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Output"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/Output"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "report": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Report"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/Report"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "uses": {
+          "type": "string"
+        },
+        "with": {
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "StepBarrier": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "StepGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "parallel": {
+          "deprecated": true,
+          "description": "Parallel defines the maximum number of steps that can run in parallel. If unset or zero, the steps run sequentially.",
+          "type": "number"
+        },
+        "steps": {
+          "description": "Steps defines a list of steps.",
+          "items": {
+            "$ref": "#/definitions/Step"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "StepLong": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "#/definitions/StepAction",
+          "description": "Action defines an action step."
+        },
+        "barrier": {
+          "$ref": "#/definitions/StepBarrier",
+          "description": "Barrier defines a step barrier."
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "deprecated": true,
+          "description": "Env defines the environment of the step.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "object"
+        },
+        "failure-strategy": {
+          "$ref": "#/definitions/FailureStrategy",
+          "description": "FailureStrategy defines error handling."
+        },
+        "group": {
+          "$ref": "#/definitions/StepGroup",
+          "description": "Group defines a step group."
+        },
+        "id": {
+          "description": "Id defines the step id.",
+          "type": "string"
+        },
+        "if": {
+          "description": "If defines conditional execution logic.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name defines the step name.",
+          "type": "string"
+        },
+        "parallel": {
+          "$ref": "#/definitions/StepGroup",
+          "description": "Parallel defines a parallel step group."
+        },
+        "queue": {
+          "$ref": "#/definitions/StepQueue",
+          "description": "Queue defines a queue step."
+        },
+        "run": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/StepRun"
+            }
+          ],
+          "description": "Run defines a run step."
+        },
+        "run-test": {
+          "$ref": "#/definitions/StepTest",
+          "description": "Test defines a run test step"
+        },
+        "strategy": {
+          "$ref": "#/definitions/Strategy",
+          "description": "Strategy defines the matrix or looping strategy."
+        },
+        "template": {
+          "$ref": "#/definitions/StepTemplate",
+          "description": "Template defines a step template."
+        },
+        "timeout": {
+          "description": "Timeout defines the step timeout duration.",
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "uses": {
+          "deprecated": true,
+          "description": "Uses defines the github action.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "string"
+        },
+        "with": {
+          "deprecated": true,
+          "description": "Uses defines the github action configuration parameters.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "StepQueue": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "pipeline",
+            "stage"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object"
+    },
+    "StepRun": {
+      "additionalProperties": false,
+      "properties": {
+        "container": {
+          "$ref": "#/definitions/Container"
+        },
+        "delegate": {
+          "anyOf": [
+            {
+              "const": "inherit-from-infrastrcuture",
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Output"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/Output"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "report": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Report"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/Report"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "script": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "shell": {
+          "enum": [
+            "sh",
+            "bash",
+            "powershell",
+            "pwsh",
+            "python"
+          ],
+          "type": "string"
+        },
+        "uses": {
+          "type": "string"
+        },
+        "with": {
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "StepTemplate": {
+      "additionalProperties": false,
+      "properties": {
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "uses": {
+          "type": "string"
+        },
+        "with": {
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "StepTest": {
+      "additionalProperties": false,
+      "properties": {
+        "container": {
+          "$ref": "#/definitions/Container"
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "intelligence": {
+          "$ref": "#/definitions/TestIntelligence"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Output"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/Output"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "report": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Report"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/Report"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "script": {
+          "type": "string"
+        },
+        "splitting": {
+          "$ref": "#/definitions/TestSplitting"
+        }
+      },
+      "type": "object"
+    },
+    "Strategy": {
+      "additionalProperties": false,
+      "properties": {
+        "fail-fast": {
+          "description": "FailFast defines the how to handle stage or step failure. If true, all in-progress or pending stages or steps are cancelled if any stage or step in the matrix fails.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "boolean"
+        },
+        "for": {
+          "$ref": "#/definitions/For",
+          "description": "For defines a for loop execution strategy."
+        },
+        "matrix": {
+          "$ref": "#/definitions/Matrix",
+          "description": "Matrix defines a matrix execution strategy."
+        },
+        "max-parallel": {
+          "description": "MaxParallel defines the maximum number of parallel stages or steps.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "number"
+        },
+        "while": {
+          "$ref": "#/definitions/While",
+          "description": "While defines a while loop execution strategy."
+        }
+      },
+      "type": "object"
+    },
+    "Template": {
+      "additionalProperties": false,
+      "properties": {
+        "inputs": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Input"
+          },
+          "type": "object"
+        },
+        "stage": {
+          "$ref": "#/definitions/Stage"
+        },
+        "step": {
+          "$ref": "#/definitions/Step"
+        }
+      },
+      "required": [
+        "stage",
+        "step"
+      ],
+      "type": "object"
+    },
+    "TestIntelligence": {
+      "additionalProperties": false,
+      "properties": {
+        "disabled": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TestSplitting": {
+      "additionalProperties": false,
+      "properties": {
+        "concurrency": {
+          "type": "number"
+        },
+        "disabled": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "Volume": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "uses": {
+          "enum": [
+            "bind",
+            "claim",
+            "config",
+            "temp"
+          ],
+          "type": "string"
+        },
+        "with": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/VolumeBind"
+            },
+            {
+              "$ref": "#/definitions/VolumeClaim"
+            },
+            {
+              "$ref": "#/definitions/VolumeConfigMap"
+            },
+            {
+              "$ref": "#/definitions/VolumeTemp"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "uses"
+      ],
+      "type": "object"
+    },
+    "VolumeBind": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VolumeClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VolumeConfigMap": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "optional": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "VolumeTemp": {
+      "additionalProperties": false,
+      "properties": {
+        "limit": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "medium": {
+          "const": "memory",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "While": {
+      "additionalProperties": false,
+      "description": "While defines a while loop execution strategy.",
+      "properties": {
+        "condition": {
+          "description": "Condition defines the while condition.",
+          "type": "string"
+        },
+        "iterations": {
+          "description": "Iterations defines maximum number of interations.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

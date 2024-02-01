@@ -1,0 +1,11 @@
+# stage template
+
+pipeline:
+  stages:
+  - template:
+      uses: account.golang
+      with:
+        version: "1.19"
+        goos: linux
+        goarch: amd64
+        cgo-enabled: true

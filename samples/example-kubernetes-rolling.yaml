@@ -1,0 +1,20 @@
+pipeline:
+  stages:
+  - service:
+      name: test
+    steps:
+    # previously the rollout step was responsible
+    # for cloning and download necessary files. The
+    # download is now fully de-coupled from the
+    # kubernetes rollout.
+    - action:
+        uses: clone
+        with:
+          repo: harness/manifests
+    # kubernetes rollout is shipped as a plugin
+    # instead of a generic rollout step.
+    - action:
+        uses: kubernetes-rolling
+        with:
+          dry_run: true
+          pruning: on
