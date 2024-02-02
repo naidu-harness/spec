@@ -41,6 +41,11 @@ export interface StepLong {
     action?: StepAction;
 
     /**
+     * Approval defines an approval step.
+     */
+    approval?: StepApproval;
+
+    /**
      * Group defines a step group.
      */
     group?: StepGroup;
@@ -134,6 +139,12 @@ export interface StepAction {
 
     output?: Output | Output[];
     report?: Report | Report[];
+}
+
+export interface StepApproval {
+    uses?: string;
+    with?: Record<string, any>;
+    env?: Record<string, string>;
 }
 
 export interface StepBarrier {

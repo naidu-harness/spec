@@ -1398,6 +1398,24 @@
       },
       "type": "object"
     },
+    "StepApproval": {
+      "additionalProperties": false,
+      "properties": {
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "uses": {
+          "type": "string"
+        },
+        "with": {
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "StepBarrier": {
       "additionalProperties": false,
       "properties": {
@@ -1434,6 +1452,10 @@
         "action": {
           "$ref": "#/definitions/StepAction",
           "description": "Action defines an action step."
+        },
+        "approval": {
+          "$ref": "#/definitions/StepApproval",
+          "description": "Approval defines an approval step."
         },
         "barrier": {
           "$ref": "#/definitions/StepBarrier",
