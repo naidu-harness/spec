@@ -55,7 +55,7 @@ pipeline:
   # repository should be optional. If undefined,
   # the repository and conector are the same as
   # where the yaml was stored.
-  repository:
+  repo:
     name: drone/drone
     connector: account.github
   stages:

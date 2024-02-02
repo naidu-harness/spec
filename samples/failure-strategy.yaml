@@ -38,5 +38,5 @@ pipeline:
         script: go test
         container: golang
       failure-strategy:
-        errors: [ unknown, connectivity]
+        errors: [ unknown, connectivity ]
         action: abort
