@@ -557,6 +557,25 @@
       ],
       "type": "object"
     },
+    "MachineImage": {
+      "enum": [
+        "ubuntu-latest",
+        "macos-latest",
+        "wndows-latest"
+      ],
+      "type": "string"
+    },
+    "MachineSize": {
+      "enum": [
+        "flex",
+        "small",
+        "medium",
+        "large",
+        "xlarge",
+        "xxlarge"
+      ],
+      "type": "string"
+    },
     "Matrix": {
       "description": "Matrix defines a matrix execution strategy.",
       "properties": {
@@ -951,6 +970,87 @@
       },
       "type": "object"
     },
+    "Runtime": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RuntimeShort"
+        },
+        {
+          "$ref": "#/definitions/RuntimeLong"
+        }
+      ]
+    },
+    "RuntimeCloud": {
+      "additionalProperties": false,
+      "properties": {
+        "image": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MachineImage"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "size": {
+          "$ref": "#/definitions/MachineSize"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeInstance": {
+      "additionalProperties": false,
+      "properties": {
+        "image": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeKubernetes": {
+      "additionalProperties": false,
+      "properties": {
+        "namespace": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeLong": {
+      "additionalProperties": false,
+      "properties": {
+        "cloud": {
+          "$ref": "#/definitions/RuntimeCloud"
+        },
+        "instance": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/RuntimeInstance"
+            }
+          ]
+        },
+        "kubernetes": {
+          "$ref": "#/definitions/RuntimeKubernetes"
+        },
+        "shell": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RuntimeShort": {
+      "enum": [
+        "cloud",
+        "instance",
+        "kubernetes",
+        "shell"
+      ],
+      "type": "string"
+    },
     "Schema": {
       "additionalProperties": false,
       "properties": {
@@ -1064,6 +1164,10 @@
           "deprecated": true,
           "description": "RunsOn defines the type of machine to run the job.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
           "type": "string"
+        },
+        "runtime": {
+          "$ref": "#/definitions/Runtime",
+          "description": "Runtime defines the execution runtime."
         },
         "service": {
           "$ref": "#/definitions/Service",

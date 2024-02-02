@@ -1,6 +1,7 @@
 import { Cache } from "./cache";
 import { FailureStrategy } from "./failure";
 import { Platform } from "./platform";
+import { Runtime } from "./runtime";
 import { Service } from "./service";
 import { Step } from "./steps";
 import { Strategy } from "./strategy";
@@ -26,6 +27,11 @@ export interface Stage {
      * Service defines the deployment target.
      */
     service?: Service;
+
+    /**
+     * Runtime defines the execution runtime.
+     */
+    runtime?: Runtime;
 
     /**
      * Platform defines the target platform.

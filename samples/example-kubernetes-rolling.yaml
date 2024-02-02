@@ -1,7 +1,6 @@
 pipeline:
   stages:
-  - service:
-      name: test
+  - service: petstore
     steps:
     # previously the rollout step was responsible
     # for cloning and download necessary files. The
