@@ -1,4 +1,5 @@
 import { Cache } from "./cache";
+import { Clone } from "./clone";
 import { FailureStrategy } from "./failure";
 import { Platform } from "./platform";
 import { Runtime } from "./runtime";
@@ -17,6 +18,11 @@ export interface Stage {
      * Name defines the pipeline name.
      */
     name?: string;
+
+    /**
+     * Clone overrides the default clone settings.
+     */
+    clone?: Clone;
 
     /**
      * Strategy defines the matrix or looping strategy.
