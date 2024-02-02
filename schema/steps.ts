@@ -46,6 +46,16 @@ export interface StepLong {
     approval?: StepApproval;
 
     /**
+     * Background defines a background step.
+     */
+    background?: StepRun;
+
+    /**
+     * Barrier defines a step barrier.
+     */
+    barrier?: StepBarrier;
+
+    /**
      * Group defines a step group.
      */
     group?: StepGroup;
@@ -70,10 +80,7 @@ export interface StepLong {
      */
     timeout?: string | number;
 
-    /**
-     * Barrier defines a step barrier.
-     */
-    barrier?: StepBarrier;
+
 
     //
     // Step Types : End

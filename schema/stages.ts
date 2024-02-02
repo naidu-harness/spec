@@ -1,5 +1,6 @@
 import { Cache } from "./cache";
 import { Clone } from "./clone";
+import { Container } from "./container";
 import { FailureStrategy } from "./failure";
 import { Platform } from "./platform";
 import { Runtime } from "./runtime";
@@ -99,6 +100,17 @@ export interface Stage {
      * @deprecated
      */
     "runs-on"?: string;
+
+    /**
+     * Services defines background service containers.
+     * 
+     * This property is available solely for the purpose of
+     * backward compatibility with GitHub Actions.
+     * 
+     * @github
+     * @deprecated
+     */
+    services?: Record<string, Container>;
 }
 
 export interface StageGroup {

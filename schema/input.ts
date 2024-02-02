@@ -3,7 +3,13 @@ export interface Input {
     /**
      * Type defines the input type.
      */
-    type: "string" | "number" | "boolean" | "array" | "map"
+    type: 
+        "string" 
+      | "number" 
+      | "boolean" 
+      | "array" 
+      | "choice"      // GitHub compatibility
+      | "environment" // GitHub compatibility
 
     /**
      * Description defines the input description.
@@ -29,6 +35,14 @@ export interface Input {
      * Enum defines a list of accepted input values.
      */
     enum?: any[]
+
+    /**
+     * Options defines a list of accepted input values.
+     * This is an alias for enum.
+     * @github
+     * @deprecated
+     */
+    options?: any[]
 
     /**
      * Mask indicates the input should be masked.

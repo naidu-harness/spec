@@ -262,7 +262,8 @@
         },
         "credentials": {
           "$ref": "#/definitions/Credentials",
-          "description": "Credentials provides registry authentication credentials."
+          "deprecated": true,
+          "description": "Credentials provides the registry authentication credentials."
         },
         "dns": {
           "anyOf": [
@@ -289,6 +290,14 @@
               "type": "array"
             }
           ]
+        },
+        "env": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "deprecated": true,
+          "description": "Env provides the container environment variables.",
+          "type": "object"
         },
         "extra-hosts": {
           "anyOf": [
@@ -374,11 +383,11 @@
           "description": "AWS defines registry credentials for amazon web services."
         },
         "password": {
-          "description": "Password defines registry password.",
+          "description": "Password provides the registry password.",
           "type": "string"
         },
         "username": {
-          "description": "Username defines registry username.",
+          "description": "Username provides the registry username.",
           "type": "string"
         }
       },
@@ -388,9 +397,11 @@
       "additionalProperties": false,
       "properties": {
         "access-key": {
+          "description": "AccessKey provides the aws access key id.",
           "type": "string"
         },
         "secret-key": {
+          "description": "SecretKey provides the aws access key secret.",
           "type": "string"
         }
       },
@@ -625,6 +636,12 @@
           "description": "Mask indicates the input should be masked.",
           "type": "boolean"
         },
+        "options": {
+          "deprecated": true,
+          "description": "Options defines a list of accepted input values. This is an alias for enum.",
+          "items": {},
+          "type": "array"
+        },
         "required": {
           "description": "Required indicates the input is required.",
           "type": "boolean"
@@ -636,7 +653,8 @@
             "number",
             "boolean",
             "array",
-            "map"
+            "choice",
+            "environment"
           ],
           "type": "string"
         }
@@ -1290,6 +1308,14 @@
           "$ref": "#/definitions/Service",
           "description": "Service defines the deployment target."
         },
+        "services": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Container"
+          },
+          "deprecated": true,
+          "description": "Services defines background service containers.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
+          "type": "object"
+        },
         "steps": {
           "description": "Steps defines a list of steps.",
           "items": {
@@ -1456,6 +1482,10 @@
         "approval": {
           "$ref": "#/definitions/StepApproval",
           "description": "Approval defines an approval step."
+        },
+        "background": {
+          "$ref": "#/definitions/StepRun",
+          "description": "Background defines a background step."
         },
         "barrier": {
           "$ref": "#/definitions/StepBarrier",

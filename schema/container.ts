@@ -19,7 +19,10 @@ export interface ContainerLong {
     connector?: string;
 
     /**
-     * Credentials provides registry authentication credentials.
+     * Credentials provides the registry authentication
+     * credentials.
+     * @github
+     * @deprecated
      */
     credentials?: Credentials;
 
@@ -30,6 +33,13 @@ export interface ContainerLong {
     args?: string | string[];
 
     dns?: string | string[];
+
+    /**
+     * Env provides the container environment variables.
+     * @github
+     * @deprecated
+     */
+    env?: Record<string, string>;
 
     "extra-hosts"?: string | string[];
 
@@ -58,11 +68,12 @@ export interface ContainerLong {
 
 export interface Credentials {
     /**
-     * Username defines registry username.
+     * Username provides the registry username.
      */
     username?: string;
+
     /**
-     * Password defines registry password.
+     * Password provides the registry password.
      */
     password?: string;
 
@@ -73,6 +84,13 @@ export interface Credentials {
 }
 
 export interface CredentialsAWS {
+    /**
+     * AccessKey provides the aws access key id.
+     */
     "access-key"?: string;
+
+    /**
+     * SecretKey provides the aws access key secret.
+     */
     "secret-key"?: string;
 }
