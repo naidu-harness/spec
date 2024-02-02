@@ -1,6 +1,7 @@
 import { Cache } from "./cache";
 import { Clone } from "./clone";
 import { Container } from "./container";
+import { Environment } from "./environment";
 import { FailureStrategy } from "./failure";
 import { Platform } from "./platform";
 import { Runtime } from "./runtime";
@@ -34,6 +35,11 @@ export interface Stage {
      * Service defines the deployment target.
      */
     service?: Service;
+
+    /**
+     * Environment defines the deployment environment (production, staging).
+     */
+    environment?: Environment;
 
     /**
      * Runtime defines the execution runtime.

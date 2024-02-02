@@ -1,7 +1,9 @@
 import { Clone } from "./clone";
+import { Environment } from "./environment";
 import { Input } from "./input";
 import { On } from "./on";
 import { Repository } from "./repository";
+import { Service } from "./service";
 import { Stage } from "./stages";
 
 export interface Pipeline {
@@ -27,6 +29,11 @@ export interface Pipeline {
      * propagate to all pipeline steps.
      */
     env?: Record<string, string>;
+
+
+    environment?: Environment;
+    
+    service?: Service;
 
     /**
      * Stages provides a list of stages. Each pipeline

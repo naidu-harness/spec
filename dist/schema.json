@@ -407,6 +407,59 @@
       },
       "type": "object"
     },
+    "Environment": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/EnvironmentLong"
+        }
+      ]
+    },
+    "EnvironmentItem": {
+      "additionalProperties": false,
+      "properties": {
+        "deploy-to": {
+          "anyOf": [
+            {
+              "const": "all",
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "DeployToAll deploys to all infrastructure definitions (clusters) associated with the environment."
+        },
+        "name": {
+          "description": "Name provides the environment name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EnvironmentLong": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/definitions/EnvironmentItem"
+          },
+          "type": "array"
+        },
+        "parallel": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "Event": {
       "anyOf": [
         {
@@ -802,6 +855,9 @@
           "description": "Env provides global environment variables that propagate to all pipeline steps.",
           "type": "object"
         },
+        "environment": {
+          "$ref": "#/definitions/Environment"
+        },
         "id": {
           "deprecated": true,
           "description": "Id provides a unique pipeline identifer.",
@@ -841,6 +897,9 @@
         "repo": {
           "$ref": "#/definitions/Repository",
           "description": "Repo overrides the default repository."
+        },
+        "service": {
+          "$ref": "#/definitions/Service"
         },
         "stages": {
           "description": "Stages provides a list of stages. Each pipeline is made up of one or more stages that executes sequentially.",
@@ -1267,6 +1326,10 @@
         "delegate": {
           "description": "Delegage defines the delegate that should handle stage execution. This is optional.",
           "type": "string"
+        },
+        "environment": {
+          "$ref": "#/definitions/Environment",
+          "description": "Environment defines the deployment environment (production, staging)."
         },
         "failure-strategy": {
           "$ref": "#/definitions/FailureStrategy"
