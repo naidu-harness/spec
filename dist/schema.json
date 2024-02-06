@@ -445,6 +445,17 @@
       },
       "type": "object"
     },
+    "infrastructure": {
+      "additionalProperties": false,
+      "name": {
+        "description": "Name provided for the infrastructure.",
+        "type": "string"
+      },
+        "dynamic-provisioned": {
+          "description": "Dynamic provisioned infrastrcuture.",
+          "type": "boolean"
+        }
+    },
     "EnvironmentLong": {
       "additionalProperties": false,
       "properties": {
