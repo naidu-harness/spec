@@ -63,12 +63,17 @@ export interface Stage {
     delegate?: string;
 
     /**
-     * Group defines a group of steps.
+     * Approval defines an approval stage.
+     */
+    approval?: StageApproval;
+
+    /**
+     * Group defines a group of stages.
      */
     group?: StageGroup
 
     /**
-     * Parallel defines a parallel of stages.
+     * Parallel defines a set of parallel stages.
      */
     parallel?: StageGroup
 
@@ -132,6 +137,11 @@ export interface StageGroup {
      * Stages defines a list of stages.
      */
     stages?: Stage[];
+}
+
+export interface StageApproval {
+    uses?: string;
+    with?: Record<string, any>;
 }
 
 export interface StageTemplate {

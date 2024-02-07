@@ -1315,6 +1315,10 @@
     "Stage": {
       "additionalProperties": false,
       "properties": {
+        "approval": {
+          "$ref": "#/definitions/StageApproval",
+          "description": "Approval defines an approval stage."
+        },
         "cache": {
           "$ref": "#/definitions/Cache",
           "description": "Cache defines the cache configuration."
@@ -1336,7 +1340,7 @@
         },
         "group": {
           "$ref": "#/definitions/StageGroup",
-          "description": "Group defines a group of steps."
+          "description": "Group defines a group of stages."
         },
         "id": {
           "description": "Id defines the pipeline id.",
@@ -1352,7 +1356,7 @@
         },
         "parallel": {
           "$ref": "#/definitions/StageGroup",
-          "description": "Parallel defines a parallel of stages."
+          "description": "Parallel defines a set of parallel stages."
         },
         "platform": {
           "$ref": "#/definitions/Platform",
@@ -1399,6 +1403,18 @@
             "$ref": "#/definitions/Volume"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "StageApproval": {
+      "additionalProperties": false,
+      "properties": {
+        "uses": {
+          "type": "string"
+        },
+        "with": {
+          "type": "object"
         }
       },
       "type": "object"
