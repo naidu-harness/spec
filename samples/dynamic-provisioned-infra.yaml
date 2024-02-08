@@ -33,4 +33,4 @@ pipeline:
           environment: "dev" 
           infrastructure: "k8s-dev"
           connector: <+terraform.output.connectorName> #connector identifier
-          namespace: <+sterraform.output.namespace> # Service Now Ticket Type
+          namespace: <+sterraform.output.namespace> #namespace
