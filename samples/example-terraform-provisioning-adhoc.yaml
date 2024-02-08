@@ -22,12 +22,12 @@ pipeline:
         with:
           plan: true
           command: apply
-          provisionerIdentifier: <+service.name>-<+env.name>
-          secretsStore: "Harness Secrets Manager"
+          provisioner: <+service.name>-<+env.name>
+          secret-store: "Harness Secrets Manager"
           workspace: #optional
-          awsAuth: #optional
+          aws-auth: #optional
           region: #optional
-          roleArn: #optional
+          role-arn: #optional
     # approve deployment.
     - approval:
         uses: harness-ui
@@ -44,28 +44,28 @@ pipeline:
         with:
           plan: false
           command: apply
-          provisionerIdentifier: <+service.name>-<+env.name>
-          secretsStore: "Harness Secrets Manager"
+          provisioner: <+service.name>-<+env.name>
+          secret-store: "Harness Secrets Manager"
           workspace: #optional
-          awsAuth: #optional
+          aws-auth: #optional
           region: #optional
-          roleArn: #optional
-          inheritPlan: true
-          encryptPlanJson: false #optional
-          commandLine: #optional
+          role-arn: #optional
+          inherit-plan: true
+          encrypt-plan-json: false #optional
+          args: #optional
             apply: -some-command
     - action:
         uses: terraform-provisioner
         with:
           plan: false
           command: destroy
-          provisionerIdentifier: <+service.name>-<+env.name>
-          secretsStore: "Harness Secrets Manager"
+          provisioner: <+service.name>-<+env.name>
+          secret-store: "Harness Secrets Manager"
           workspace: #optional
-          awsAuth: #optional
+          aws-auth: #optional
           region: #optional
-          roleArn: #optional
-          inheritPlan: true
-          encryptPlanJson: false #optional
-          commandLine: #optional
+          role-arn: #optional
+          inherit-plan: true
+          encrypt-plan-json: false #optional
+          args: #optional
             apply: -some-command

@@ -20,6 +20,8 @@ pipeline:
     - action:
         uses: kubernetes-canary-deploy
         with:
+          count-type: instances | percentage
+          weight: 5 | 10% 
           dry-run: false
    # executes a canary delete 
     - action:

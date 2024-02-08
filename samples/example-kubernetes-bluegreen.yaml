@@ -22,7 +22,7 @@ pipeline:
         with:
           dry-run: false
           pruning: false
-          SkipDeploymentSameManifestUsedinPreviousDeployment: true
+          update-primary-only: true
           
    # executes a blue green swap 
     - action:
@@ -39,7 +39,7 @@ pipeline:
           self-approval: false
           print-execution-history: true
           min-approvers: 1
-          
+
     # kubernetes blue green scale down, scales the old service down to 0.
     - action:
         uses: kubernetes-blue-green-scale-down
