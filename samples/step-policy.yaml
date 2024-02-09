@@ -4,7 +4,7 @@ pipeline:
   stages:
   - steps:
     - action:
-        uses: harness/opa
+        uses: policy
         with:
           type: custom
           policy-set: namespace-validator #policy set name

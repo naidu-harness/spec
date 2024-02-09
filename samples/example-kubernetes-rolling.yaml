@@ -23,7 +23,7 @@ pipeline:
           dry-run: true
     # approve deployment.
     - approval:
-        uses: harness-ui
+        uses: harness
         with:
           timeout: 30m
           message: "this is an approval prompt"

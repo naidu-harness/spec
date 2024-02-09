@@ -2,7 +2,7 @@ pipeline:
   stages:
   - steps:
     - action:
-        uses: harness/wait
+        uses: wait
         with:
           duration: 10m
           
