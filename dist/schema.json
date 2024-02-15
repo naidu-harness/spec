@@ -706,6 +706,7 @@
             "number",
             "boolean",
             "array",
+            "duration",
             "choice",
             "environment"
           ],
@@ -1244,15 +1245,19 @@
     "Schema": {
       "additionalProperties": false,
       "properties": {
+        "action": {
+          "$ref": "#/definitions/Template",
+          "description": "Action defines re-usable pipeline steps and stages."
+        },
         "defaults": {
-          "description": "Defaults provides default settings that apply to all jobs in the workflow.",
+          "description": "Defaults provides default settings that apply to all jobs in the workflow.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
           "type": "object"
         },
         "env": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Envs defines environment variables that are available to all steps in the workflow.",
+          "description": "Envs defines environment variables that are available to all steps in the workflow.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
           "type": "object"
         },
         "inputset": {
@@ -1262,16 +1267,16 @@
           "additionalProperties": {
             "$ref": "#/definitions/Stage"
           },
-          "description": "Jobs defines the parallel workflow jobs.",
+          "description": "Jobs defines the parallel workflow jobs.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
           "type": "object"
         },
         "name": {
-          "description": "Name defines the pipeline name.",
+          "description": "Name defines the pipeline name.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions.",
           "type": "string"
         },
         "on": {
           "$ref": "#/definitions/On",
-          "description": "On defines the workflow triggers."
+          "description": "On defines the workflow triggers.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions."
         },
         "pipeline": {
           "$ref": "#/definitions/Pipeline",
@@ -1279,7 +1284,7 @@
         },
         "template": {
           "$ref": "#/definitions/Template",
-          "description": "Template defines re-usable resources."
+          "description": "Template defines re-usable pipeline steps and stages."
         }
       },
       "type": "object"
@@ -1403,6 +1408,10 @@
             "$ref": "#/definitions/Volume"
           },
           "type": "array"
+        },
+        "workspace": {
+          "$ref": "#/definitions/Workspace",
+          "description": "Workspace configures the local workspace directory."
         }
       },
       "type": "object"
@@ -1597,6 +1606,21 @@
         "name": {
           "description": "Name defines the step name.",
           "type": "string"
+        },
+        "needs": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "deprecated": true,
+          "description": "Needs defines steps that must be completed before this step can run.\n\nThis property is available solely for the purpose of backward compatibility with GitHub Actions."
         },
         "parallel": {
           "$ref": "#/definitions/StepGroup",
@@ -1865,10 +1889,6 @@
           "$ref": "#/definitions/Step"
         }
       },
-      "required": [
-        "stage",
-        "step"
-      ],
       "type": "object"
     },
     "TestIntelligence": {
@@ -1990,6 +2010,28 @@
         "iterations": {
           "description": "Iterations defines maximum number of interations.",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Workspace": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/WorkspaceLong"
+        }
+      ]
+    },
+    "WorkspaceLong": {
+      "additionalProperties": false,
+      "properties": {
+        "disabled": {
+          "type": "boolean"
+        },
+        "path": {
+          "type": "string"
         }
       },
       "type": "object"

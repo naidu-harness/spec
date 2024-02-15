@@ -12,8 +12,7 @@ pipeline:
           fields:
           - name: "labels" # JIRA Label
             value: "adoption_blocker" # Value for label
-
-         
+    
 
 ## JIRA Update
 

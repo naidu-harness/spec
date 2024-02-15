@@ -13,9 +13,11 @@ pipeline:
     # download manifest related to defines service.
     - action:
         uses: manifest-download
+  
     # apply manifest templates.
     - action:
         uses: manifest-bake
+
     # execute a kubernetes blue green deployment - deploys stage
     - action:
         uses: kubernetes-blue-green-deploy

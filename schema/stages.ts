@@ -9,6 +9,7 @@ import { Service } from "./service";
 import { Step } from "./steps";
 import { Strategy } from "./strategy";
 import { Volume } from "./volumes";
+import { Workspace } from "./workspace";
 
 export interface Stage {
     /**
@@ -50,6 +51,11 @@ export interface Stage {
      * Platform defines the target platform.
      */
     platform?: Platform;
+
+    /**
+     * Workspace configures the local workspace directory.
+     */
+    workspace?: Workspace;
 
     /**
      * Cache defines the cache configuration.

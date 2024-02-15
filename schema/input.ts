@@ -8,6 +8,7 @@ export interface Input {
       | "number" 
       | "boolean" 
       | "array" 
+      | "duration"
       | "choice"      // GitHub compatibility
       | "environment" // GitHub compatibility
 

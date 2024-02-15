@@ -133,6 +133,18 @@ export interface StepLong {
      * @deprecated
      */
     with?: Record<string, any>;
+
+    /**
+     * Needs defines steps that must be completed before this
+     * step can run.
+     * 
+     * This property is available solely for the purpose of
+     * backward compatibility with GitHub Actions.
+     * 
+     * @github
+     * @deprecated
+     */
+    needs?: string | string[];
 }
 
 //
